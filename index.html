@@ -5,11 +5,36 @@
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="css/normalize.css" />
 	<link rel="stylesheet" href="css/style.css" />
+	<script src="js/jquery.js"></script>
 	<script src="js/script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <p class="enlarge-text">test</p>
+    <div class="container__main">
+		
+		<div id="main__dev">
+			<button id="dev__welcome" class="dev__button">Welcome</button>
+			<button id="dev__menu" class="dev__button">Menu</button>
+			<button id="dev__game" class="dev__button">Game</button>
+		</div>
+
+		<div id="main__welcome">
+			<h2>Welcome!</h2>
+			<p>Enter your nickname below and start playing now!</p>
+			<input type="text">
+			<a href="#">Confirm</a>
+		</div>
+
+		<div id="main__menu">
+			<h2>Main menu</h2>
+			<ul class="menu__menu">
+				<li id="menu__play">Play</li>
+				<li id="menu__settings">Settings</li>
+			</ul>
+		</div>
+
+		<div id="main__game">
+			<h2>Game menu</h2>
+		</div>
     </div>
 </body>
 </html>

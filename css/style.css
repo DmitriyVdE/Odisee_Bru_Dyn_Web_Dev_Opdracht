@@ -1,7 +1,9 @@
 @font-face {
-    font-family: 'Source Sans';
-    src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2-variations");
-    font-weight: 1 999;
+    font-family: 'Source Sans 3 VF';
+    font-weight: 200 900;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2");
 }
 
 .enlarge-text {
@@ -9,12 +11,12 @@
 }
 
 .enlarge-text:hover {
-    font-weight: 999;
+    font-weight: 900;
 }
 
 * {
     color: white;
-    font-family: 'Source Sans';
+    font-family: 'Source Sans 3 VF';
 }
 
 html {
@@ -27,8 +29,47 @@ body {
     margin: 0;
 }
 
-.container {
+h2 {
+    font-size: 5rem;
+}
+
+.container__main {
+    display: flex;
+    flex-wrap: wrap;
     max-width: 93rem;
     margin: 0 auto;
     color: white;
+    border: 1px solid white;
 }
+
+.container__main > * {
+    padding: 1rem;
+    border: 1px solid white;
+    flex: 1 0 100%;
+}
+
+#main__dev {
+}
+
+.dev__button {
+    color: black;
+    padding: 1rem 2rem;
+    margin: 0 0.5rem 0 0;
+}
+
+#main__welcome {
+    height: 60rem;
+    flex-direction: column;
+}
+
+#main__welcome > * {
+    flex: 0 0;
+    margin: 0 auto;
+}
+
+#main__menu {
+}
+
+#main__game {
+}
+
