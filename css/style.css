@@ -67,6 +67,10 @@ h2 {
     margin: 0 auto;
 }
 
+#welcome__nickname {
+    color: black;
+}
+
 #main__menu {
 }
 
