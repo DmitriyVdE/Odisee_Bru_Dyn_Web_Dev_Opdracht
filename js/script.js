@@ -1,14 +1,14 @@
-;(function($) {
+(function() { 
 	'use strict'
 
-    $(document).ready(function() {
+    window.addEventListener('load', function() {
         console.log('Ready')
 
         let defaultState = {
             startupWindow: 'welcomeWindow',
             activeWindow: '',
             firstLoad: true,
-            gamedata: {
+            gameData: {
                 nickname: '',
                 scoreTotal: 0
             }
@@ -18,38 +18,44 @@
             startupWindow: 'welcomeWindow',
             activeWindow: '',
             firstLoad: true,
-            gamedata: {
+            gameData: {
                 nickname: '',
                 scoreTotal: 0
             }
         }
 
+        const devElements = {
+            devWelcome: document.getElementById('dev__welcome'),
+            devMenu: document.getElementById('dev__menu'),
+            devGame: document.getElementById('dev__game'),
+            devReset: document.getElementById('dev__reset')
+        }
+
         const windows = {
-            welcomeWindow: {
-                name: 'welcomeWindow',
-                selector: $('#main__welcome')
+            welcomeWindow: document.getElementById('main__welcome'),
+            menuWindow: document.getElementById('main__menu'),
+            gameWindow: document.getElementById('main__game')
+        }
+
+        const allElements = {
+            welcome: {
+                nicknameText: document.getElementById('welcome__nickname'),
+                confirmButton: document.getElementById('welcome__confirm')
             },
-            menuWindow: {
-                name: 'menuWindow',
-                selector: $('#main__menu')
+            menu: {
+
             },
-            gameWindow: {
-                name: 'gameWindow',
-                selector: $('#main__game')
+            game: {
+
             }
         }
 
-        let devWelcome = $('#dev__welcome')
-        let devMenu = $('#dev__menu')
-        let devGame = $('#dev__game')
-        let devReset = $('#dev__reset')
-
-        function setActiveWindow(event) {
-            windows.welcomeWindow.selector.css('display', 'none')
-            windows.menuWindow.selector.css('display', 'none')
-            windows.gameWindow.selector.css('display', 'none')
-            windows[event.data.name].selector.css('display', 'flex')
-            state.activeWindow = event.data.name
+        function setActiveWindow(windowName) {
+            windows.welcomeWindow.style.display = 'none'
+            windows.menuWindow.style.display = 'none'
+            windows.gameWindow.style.display = 'none'
+            windows[windowName].style.display = 'flex'
+            state.activeWindow = windowName
         }
 
         function saveState() {
@@ -68,35 +74,36 @@
 
         function resetLocalStorage() {
             localStorage.removeItem('savedState')
-            setActiveWindow({ data: { name: 'welcomeWindow' }})
+            setActiveWindow('welcomeWindow')
             state = defaultState
             saveState()
             console.log('State reset')
         }
         
-        devReset.on('click', resetLocalStorage)
+        devElements.devReset.addEventListener('click', resetLocalStorage)
 
-        setActiveWindow({ data: { name: state.startupWindow }})
+        setActiveWindow(state.startupWindow)
 
-        devWelcome.on('click', { name: 'welcomeWindow' }, setActiveWindow)
-        devMenu.on('click', { name: 'menuWindow' }, setActiveWindow)
-        devGame.on('click', { name: 'gameWindow' }, setActiveWindow)
+        devElements.devWelcome.addEventListener('click', function() {setActiveWindow('welcomeWindow')})
+        devElements.devMenu.addEventListener('click', function() {setActiveWindow('menuWindow')})
+        devElements.devGame.addEventListener('click', function() {setActiveWindow('gameWindow')})
 
         function saveNickname() {
-            state.gamedata.nickname = $('#welcome__nickname').val()
+            state.gameData.nickname = allElements.welcome.nicknameText.value
             state.firstLoad = false
             saveState()
-            setActiveWindow({ data: { name: 'menuWindow' }})
+            setActiveWindow('menuWindow')
         }
 
-        $('#welcome__confirm').on('click', saveNickname)
+        allElements.welcome.confirmButton.addEventListener('click', saveNickname)
 
         if (state.firstLoad) {
-            setActiveWindow({ data: { name: 'welcomeWindow' }})
+            setActiveWindow('welcomeWindow')
         } else {
-            setActiveWindow({ data: { name: 'menuWindow' }})
+            setActiveWindow('menuWindow')
             state.startupWindow = 'menuWindow'
             saveState()
         }
     })
-})(jQuery)
+})()
+
