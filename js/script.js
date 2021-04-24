@@ -73,10 +73,10 @@
                 countdownText: document.getElementById('countdown__text'),
                 countdownBar: document.getElementById('countdown__bar'),
                 gameQuiz: document.getElementById('game__quiz'),
-                question: document.getElementById('quiz__question'),
-                content: document.getElementById('quiz__content'),
-                image: document.getElementById('quiz__image'),
-                text: document.getElementById('quiz__text'),
+                questionTitle: document.getElementById('quiz__question'),
+                questionContent: document.getElementById('quiz__content'),
+                questionImage: document.getElementById('quiz__image'),
+                questionText: document.getElementById('quiz__text'),
                 answer: document.getElementById('quiz__answer'),
                 answerText: document.getElementById('quiz__answer__text'),
                 answerVoice: document.getElementById('quiz__answer__voice')
@@ -182,7 +182,7 @@
                 questionsPerGame: 3,
                 rewardCorrect: 100,
                 streakBonus: 50,
-                timeTillGame: 1,
+                timeTillGame: 3,
                 timePerQuestion: 10,
                 intermissionTime: 2
             },
@@ -259,7 +259,7 @@
             }
         }
 
-        
+        // Fresh game setup
         function startGame() {
             quiz.timer = {
                 startTime: Date.now(),
@@ -277,15 +277,16 @@
                 answered: true
             }
             
-            allElements.game.question.innerHTML = ''
-            allElements.game.image.style.display = 'none'
-            allElements.game.text.style.display = 'block'
-            allElements.game.text.innerHTML = ''
-            allElements.game.text.style.backgroundColor = ''
+            allElements.game.questionTitle.innerHTML = ''
+            allElements.game.questionImage.style.display = 'none'
+            allElements.game.questionText.style.display = 'block'
+            allElements.game.questionText.innerHTML = ''
+            allElements.game.questionText.style.backgroundColor = ''
 
             state.animationFrameIds.countdown = requestAnimationFrame(startCountdown)
         }
 
+        // Sets up and starts countdown
         function startCountdown() {
             if (quiz.current.step === 'quizPlaying') {
                 quiz.timer.startTime = Date.now()
@@ -302,8 +303,8 @@
             state.animationFrameIds.countdown = requestAnimationFrame(updateCountdown)
         }
 
+        // Update the countdown
         function updateCountdown() {
-            console.log(quiz.current.step)
             if (quiz.timer.timeLeft > 0) {
                 const timestamp = Date.now()
                 if (timestamp - quiz.timer.lastTime >= 1000) {
@@ -325,11 +326,15 @@
             if (quiz.current.step === 'countdown') {
                 startQuiz()
             } else if (quiz.current.step === 'quizPlaying') {
-                state.animationFrameIds.game = requestAnimationFrame(displayQuestion)
+                quiz.current.questionNr++
+                quiz.current.answered = false
+                if (quiz.current.questionNr <= quiz.settings.questionsPerGame) {
+                    state.animationFrameIds.game = requestAnimationFrame(displayQuestion)
+                }
             }else if (quiz.current.step === 'quizCheckAnswer') {
                 checkAnswer()
             } else if (quiz.current.step === 'quizEnd') {
-                
+                endQuiz()
             }
         }
 
@@ -348,37 +353,32 @@
         // Displays a new question and starts the timer
         // If all questions have been asked the quiz ends
         function displayQuestion() {
-            if (quiz.current.questionNr < quiz.settings.questionsPerGame) {
-                quiz.current.questionNr++
-                quiz.current.answered = false
-
-                const categories = Object.keys(quiz.questions);
-                quiz.current.category = categories[Math.floor(Math.random()*categories.length)]
-                
-                if (quiz.current.category === 'addition') {
-                    displayAdditionQuestion()
-                } else if (quiz.current.category === 'colors') {
-                    displayColorQuestion()
-                } else if (quiz.current.category === 'animals') {
-                    displayAnimalQuestion()
-                }
-
-                startCountdown()
-                quiz.current.step = 'quizCheckAnswer'
-            } else {
-                endQuiz()
+            const categories = Object.keys(quiz.questions);
+            quiz.current.category = categories[Math.floor(Math.random()*categories.length)]
+            
+            if (quiz.current.category === 'addition') {
+                displayAdditionQuestion()
+            } else if (quiz.current.category === 'colors') {
+                displayColorQuestion()
+            } else if (quiz.current.category === 'animals') {
+                displayAnimalQuestion()
             }
+
+            startCountdown()
+            quiz.current.step = 'quizCheckAnswer'
         }
 
         function displayAdditionQuestion() {
+            const number1 = getRandomInt(1, 9)
+            const number2 = getRandomInt(1, 9)
+            quiz.current.answer = number1 + number2
 
-            console.log(getRandomInt(1, 9))
-            console.log(getRandomInt(1, 9))
+            allElements.game.questionTitle.innerHTML = quiz.questions['addition'].questionText
             
-            allElements.game.image.style.display = 'none'
-            allElements.game.text.style.display = 'block'
-            allElements.game.text.innerHTML = ''
-            allElements.game.text.style.backgroundColor = ''
+            allElements.game.questionImage.style.display = 'none'
+            allElements.game.questionText.style.display = 'block'
+            allElements.game.questionText.innerHTML = number1 + ' + ' + number2 
+            allElements.game.questionText.style.backgroundColor = ''
         }
 
         function displayColorQuestion() {
@@ -387,12 +387,12 @@
             quiz.current.question = quiz.questions['colors'].options[question]
             quiz.current.answer = quiz.current.question.answer
 
-            allElements.game.question.innerHTML = quiz.questions['colors'].questionText
+            allElements.game.questionTitle.innerHTML = quiz.questions['colors'].questionText
             
-            allElements.game.image.style.display = 'none'
-            allElements.game.text.style.display = 'block'
-            allElements.game.text.innerHTML = ''
-            allElements.game.text.style.backgroundColor = quiz.current.question.hexValue
+            allElements.game.questionImage.style.display = 'none'
+            allElements.game.questionText.style.display = 'block'
+            allElements.game.questionText.innerHTML = ''
+            allElements.game.questionText.style.backgroundColor = quiz.current.question.hexValue
         }
 
         function displayAnimalQuestion() {
@@ -401,12 +401,25 @@
             quiz.current.question = quiz.questions['animals'].options[question]
             quiz.current.answer = quiz.current.question.answer
 
-            allElements.game.question.innerHTML = quiz.questions['animals'].questionText
+            allElements.game.questionTitle.innerHTML = quiz.questions['animals'].questionText
             
-            allElements.game.text.style.display = 'none'
-            allElements.game.image.style.display = 'block'
-            allElements.game.image.src = quiz.current.question.src
+            allElements.game.questionText.style.display = 'none'
+            allElements.game.questionImage.style.display = 'block'
+            allElements.game.questionImage.src = quiz.current.question.src
         }
+
+        allElements.game.answerVoice.addEventListener('click', function() {
+            let recognition = new (webkitSpeechRecognition || SpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            recognition.start();
+            recognition.onresult = function(event) {
+                console.log(event.results[0][0].transcript)
+                allElements.game.answerText.value = event.results[0][0].transcript;
+                submitAnswer()
+            };
+          });
 
         // Call submit answer with 'Enter'
         allElements.game.answerText.addEventListener('keydown', function(e) {
@@ -424,22 +437,30 @@
 
         function checkAnswer() {
             const answer = allElements.game.answerText.value
+            allElements.game.answerText.value = ''
             if (quiz.current.answered === true) {
-                if (quiz.current.answer === answer.toLowerCase()) {
-                    console.log('nice')
+                if (quiz.current.answer == answer.toLowerCase()) {
+                    allElements.game.questionTitle.innerHTML = 'Correct!'
+                    quiz.current.score += quiz.settings.rewardCorrect
                 } else {
-                    console.log('rip')
+                    allElements.game.questionTitle.innerHTML = 'Wrong!'
                 }
             } else {
-                console.log('rip2')
+                allElements.game.questionTitle.innerHTML = 'Failed to answer in time!'
             }
-            quiz.current.step === 'quizPlaying'
             startCountdown()
+            if (quiz.current.questionNr >= quiz.settings.questionsPerGame) {
+                quiz.current.step = 'quizEnd'
+            } else {
+                quiz.current.step = 'quizPlaying'
+            }
         }
 
-        // Ends the quiz
+        // Ends the quiz and saves score
         function endQuiz() {
-
+            state.gameData.scoreTotal += quiz.current.score
+            saveState()
+            setActiveWindow('menuWindow')
         }
 
     })
