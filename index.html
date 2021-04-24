@@ -33,16 +33,25 @@
 				<li id="menu__settings"><a class="enlarge-text" href="#">Settings</a></li>
 				<!-- <li id="menu__instructions"><a class="enlarge-text" href="#">Instructions</a></li> -->
 			</ul>
+			<h3 id="menu__score">0</h3>
 		</div>
 
 		<div id="main__game" class="main__container">
 			<h2 id="game__title">Game</h2>
-			<div id="game_countdown"></div>
+			<div id="game__countdown">
+				<p id="countdown__text">5</p>
+				<div id="countdown__bar"></div>
+			</div>
 			<div id="game__quiz">
-				<div id="quiz__timer"></div>
-				<h3 id="quiz__question"></h3>
-				<img id="quiz__image">
-				<div id="quiz__answers"></div>
+				<h3 id="quiz__question">Question</h3>
+				<div id="quiz__content">
+					<img id="quiz__image">
+					<p id="quiz__text">4 + 5</p>
+				</div>
+				<div id="quiz__answer">
+					<input type="text" id="quiz__answer__text">
+					<a id="quiz__answer__voice" class="enlarge-text" href="#">Voice</a>
+				</div>
 			</div>
 		</div>
     </div>

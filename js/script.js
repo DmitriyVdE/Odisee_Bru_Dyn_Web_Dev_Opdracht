@@ -34,7 +34,8 @@
                 window: '',
                 welcome: '',
                 menu: '',
-                game: ''
+                game: '',
+                countdown: ''
             }
         }
 
@@ -62,15 +63,23 @@
             menu: {
                 title: document.getElementById('menu__title'),
                 playButton: document.getElementById('menu__play'),
-                settingsButton: document.getElementById('menu__settings')
+                settingsButton: document.getElementById('menu__settings'),
                 // instructionsButton: document.getElementById('menu__title')
+                score: document.getElementById('menu__score')
             },
             game: {
                 title: document.getElementById('game__title'),
-                quizContainer: document.getElementById('game__quiz'),
+                countdown: document.getElementById('game__countdown'),
+                countdownText: document.getElementById('countdown__text'),
+                countdownBar: document.getElementById('countdown__bar'),
+                gameQuiz: document.getElementById('game__quiz'),
                 question: document.getElementById('quiz__question'),
+                content: document.getElementById('quiz__content'),
                 image: document.getElementById('quiz__image'),
-                answers: document.getElementById('quiz__answers'),
+                text: document.getElementById('quiz__text'),
+                answer: document.getElementById('quiz__answer'),
+                answerText: document.getElementById('quiz__answer__text'),
+                answerVoice: document.getElementById('quiz__answer__voice')
             }
         }
 
@@ -80,6 +89,7 @@
                 allElements.welcome.nicknameText.value = ''
             } else if (windowName === 'menuWindow') {
                 allElements.menu.title.innerHTML = `Hi ${state.gameData.nickname}!`
+                allElements.menu.score.innerHTML = `Score: ${state.gameData.scoreTotal}`
             }
 
             state.animationFrameIds.window = requestAnimationFrame(function() {
@@ -155,7 +165,8 @@
 
         // MENU SECTION
         allElements.menu.playButton.addEventListener('click', function() {
-            console.log('play clicked')
+            setActiveWindow('gameWindow')
+            startGame()
         })
 
         allElements.menu.settingsButton.addEventListener('click', function() {
@@ -168,36 +179,54 @@
         // Addition functions with 2 random numbers and their sum - check later function
         const quiz = {
             settings: {
-                questionsPerGame: 5,
+                questionsPerGame: 3,
                 rewardCorrect: 100,
-                streakBonus: 50
+                streakBonus: 50,
+                timeTillGame: 1,
+                timePerQuestion: 10,
+                intermissionTime: 2
+            },
+            timer: {
+                startTime: '',
+                lastTime: '',
+                initialTime: 0,
+                timeLeft: 5,
             },
             current: {
-                startTime: '',
-                correct: [],
+                step: 'countdown',
                 questionNr: 0,
-                score: 0
+                category: '',
+                question: '',
+                answer: '',
+                score: 0,
+                answered: true
             },
-            categories: {
+            categories: ['addition', 'colors', 'animals'],
+            questions: {
                 addition: {
                     questionText: "What is the sum of these numbers?"
                 },
                 colors: {
-                    questionText: "what is the name of this color?",
+                    questionText: "What is the name of this color?",
                     options: {
                         red: {
+                            answer: 'red',
                             hexValue: "#f23030"
                         },
                         blue: {
+                            answer: 'blue',
                             hexValue: "#3050f2"
                         },
                         green: {
+                            answer: 'green',
                             hexValue: "#30f243"
                         },
                         yellow: {
+                            answer: 'yellow',
                             hexValue: "#f2f230"
                         },
                         purple: {
+                            answer: 'purple',
                             hexValue: "#c530f2"
                         }
                     }
@@ -206,25 +235,212 @@
                     questionText: "What's this animal called?",
                     options: {
                         cat: {
-                            src: "../images/animals/cat.jpg"
+                            answer: 'cat',
+                            src: "images/animals/cat.jpg"
                         },
                         cow: {
-                            src: "../images/animals/cow.jpg"
+                            answer: 'cow',
+                            src: "images/animals/cow.jpg"
                         },
                         dog: {
-                            src: "../images/animals/dog.jpg"
+                            answer: 'dog',
+                            src: "images/animals/dog.jpg"
                         },
                         hamster: {
-                            src: "../images/animals/hamster.jpg"
+                            answer: 'hamster',
+                            src: "images/animals/hamster.jpg"
                         },
                         horse: {
-                            src: "../images/animals/horse.jpg"
+                            answer: 'horse',
+                            src: "images/animals/horse.jpg"
                         }
                     }
                 }
             }
         }
 
+        
+        function startGame() {
+            quiz.timer = {
+                startTime: Date.now(),
+                lastTime: Date.now(),
+                initialTime: quiz.settings.timeTillGame,
+                timeLeft: quiz.settings.timeTillGame,
+            }
+            quiz.current = {
+                step: 'countdown',
+                questionNr: 0,
+                category: '',
+                question: '',
+                answer: '',
+                score: 0,
+                answered: true
+            }
+            
+            allElements.game.question.innerHTML = ''
+            allElements.game.image.style.display = 'none'
+            allElements.game.text.style.display = 'block'
+            allElements.game.text.innerHTML = ''
+            allElements.game.text.style.backgroundColor = ''
+
+            state.animationFrameIds.countdown = requestAnimationFrame(startCountdown)
+        }
+
+        function startCountdown() {
+            if (quiz.current.step === 'quizPlaying') {
+                quiz.timer.startTime = Date.now()
+                quiz.timer.initialTime = quiz.settings.timePerQuestion
+                quiz.timer.timeLeft = quiz.settings.timePerQuestion
+
+            } else if (quiz.current.step === 'quizCheckAnswer') {
+                quiz.timer.startTime = Date.now()
+                quiz.timer.initialTime = quiz.settings.intermissionTime
+                quiz.timer.timeLeft = quiz.settings.intermissionTime
+            }
+            allElements.game.countdownText.innerHTML = quiz.timer.timeLeft
+            allElements.game.countdownBar.style.width = '100%'
+            state.animationFrameIds.countdown = requestAnimationFrame(updateCountdown)
+        }
+
+        function updateCountdown() {
+            console.log(quiz.current.step)
+            if (quiz.timer.timeLeft > 0) {
+                const timestamp = Date.now()
+                if (timestamp - quiz.timer.lastTime >= 1000) {
+                    quiz.timer.lastTime = timestamp
+                    quiz.timer.timeLeft--
+                    allElements.game.countdownText.innerHTML = quiz.timer.timeLeft
+                }
+                let timeLeftPercentage = 100 - (((timestamp - quiz.timer.startTime) / (quiz.timer.initialTime * 1000)) * 100)
+                allElements.game.countdownBar.style.width = timeLeftPercentage + '%'
+                state.animationFrameIds.countdown = requestAnimationFrame(updateCountdown)
+            } else {
+                allElements.game.countdownBar.style.width = '0%'
+                goToNextStep()
+            }
+        }
+
+        // Goes to the next step in the quiz
+        function goToNextStep() {
+            if (quiz.current.step === 'countdown') {
+                startQuiz()
+            } else if (quiz.current.step === 'quizPlaying') {
+                state.animationFrameIds.game = requestAnimationFrame(displayQuestion)
+            }else if (quiz.current.step === 'quizCheckAnswer') {
+                checkAnswer()
+            } else if (quiz.current.step === 'quizEnd') {
+                
+            }
+        }
+
+        // Starts the quiz and sets the required variables
+        function startQuiz() {
+            allElements.game.gameQuiz.style.display = 'flex'
+            quiz.current.step = 'quizPlaying'
+            goToNextStep()
+        }
+
+        // Returns a random int between min and max (incl. min and max)
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        // Displays a new question and starts the timer
+        // If all questions have been asked the quiz ends
+        function displayQuestion() {
+            if (quiz.current.questionNr < quiz.settings.questionsPerGame) {
+                quiz.current.questionNr++
+                quiz.current.answered = false
+
+                const categories = Object.keys(quiz.questions);
+                quiz.current.category = categories[Math.floor(Math.random()*categories.length)]
+                
+                if (quiz.current.category === 'addition') {
+                    displayAdditionQuestion()
+                } else if (quiz.current.category === 'colors') {
+                    displayColorQuestion()
+                } else if (quiz.current.category === 'animals') {
+                    displayAnimalQuestion()
+                }
+
+                startCountdown()
+                quiz.current.step = 'quizCheckAnswer'
+            } else {
+                endQuiz()
+            }
+        }
+
+        function displayAdditionQuestion() {
+
+            console.log(getRandomInt(1, 9))
+            console.log(getRandomInt(1, 9))
+            
+            allElements.game.image.style.display = 'none'
+            allElements.game.text.style.display = 'block'
+            allElements.game.text.innerHTML = ''
+            allElements.game.text.style.backgroundColor = ''
+        }
+
+        function displayColorQuestion() {
+            const keys = Object.keys(quiz.questions[quiz.current.category].options)
+            const question = keys[Math.floor(Math.random()*keys.length)]
+            quiz.current.question = quiz.questions['colors'].options[question]
+            quiz.current.answer = quiz.current.question.answer
+
+            allElements.game.question.innerHTML = quiz.questions['colors'].questionText
+            
+            allElements.game.image.style.display = 'none'
+            allElements.game.text.style.display = 'block'
+            allElements.game.text.innerHTML = ''
+            allElements.game.text.style.backgroundColor = quiz.current.question.hexValue
+        }
+
+        function displayAnimalQuestion() {
+            const keys = Object.keys(quiz.questions[quiz.current.category].options)
+            const question = keys[Math.floor(Math.random()*keys.length)]
+            quiz.current.question = quiz.questions['animals'].options[question]
+            quiz.current.answer = quiz.current.question.answer
+
+            allElements.game.question.innerHTML = quiz.questions['animals'].questionText
+            
+            allElements.game.text.style.display = 'none'
+            allElements.game.image.style.display = 'block'
+            allElements.game.image.src = quiz.current.question.src
+        }
+
+        // Call submit answer with 'Enter'
+        allElements.game.answerText.addEventListener('keydown', function(e) {
+            if (e.key === "Enter") {
+                submitAnswer()
+            }
+        })
+
+        // Submits the answer
+        function submitAnswer() {
+            cancelAnimationFrame(state.animationFrameIds.countdown)
+            quiz.current.answered = true
+            checkAnswer()
+        }
+
+        function checkAnswer() {
+            const answer = allElements.game.answerText.value
+            if (quiz.current.answered === true) {
+                if (quiz.current.answer === answer.toLowerCase()) {
+                    console.log('nice')
+                } else {
+                    console.log('rip')
+                }
+            } else {
+                console.log('rip2')
+            }
+            quiz.current.step === 'quizPlaying'
+            startCountdown()
+        }
+
+        // Ends the quiz
+        function endQuiz() {
+
+        }
 
     })
 })()
