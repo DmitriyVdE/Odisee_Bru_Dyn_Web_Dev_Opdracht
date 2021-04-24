@@ -17,23 +17,33 @@
 			<button id="dev__reset" class="dev__button">Reset local storage</button>
 		</div>
 
-		<div id="main__welcome">
+		<div id="main__welcome" class="main__container">
 			<h2>Welcome!</h2>
-			<p>Enter your nickname below and start playing now!</p>
-			<input id="welcome__nickname" type="text">
-			<a id="welcome__confirm">Confirm</a>
+			<div id="welcome__form">
+				<p>Enter your nickname below and start playing now!</p>
+				<input id="form__nickname" type="text">
+				<a id="form__confirm" class="enlarge-text" href="#">Confirm</a>
+			</div>
 		</div>
 
-		<div id="main__menu">
-			<h2>Main menu</h2>
-			<ul class="menu__menu">
-				<li id="menu__play">Play</li>
-				<li id="menu__settings">Settings</li>
+		<div id="main__menu" class="main__container">
+			<h2 id="menu__title">Main menu</h2>
+			<ul id="menu__menu">
+				<li id="menu__play"><a class="enlarge-text" href="#">Play</a></li>
+				<li id="menu__settings"><a class="enlarge-text" href="#">Settings</a></li>
+				<!-- <li id="menu__instructions"><a class="enlarge-text" href="#">Instructions</a></li> -->
 			</ul>
 		</div>
 
-		<div id="main__game">
-			<h2>Game menu</h2>
+		<div id="main__game" class="main__container">
+			<h2 id="game__title">Game</h2>
+			<div id="game_countdown"></div>
+			<div id="game__quiz">
+				<div id="quiz__timer"></div>
+				<h3 id="quiz__question"></h3>
+				<img id="quiz__image">
+				<div id="quiz__answers"></div>
+			</div>
 		</div>
     </div>
 </body>

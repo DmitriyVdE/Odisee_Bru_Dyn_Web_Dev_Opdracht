@@ -7,11 +7,11 @@
 }
 
 .enlarge-text {
-    transition: font-weight .45s ease-out;
+    transition: font-weight .15s ease-out;
 }
 
 .enlarge-text:hover {
-    font-weight: 900;
+    font-weight: 700;
 }
 
 * {
@@ -33,6 +33,10 @@ h2 {
     font-size: 5rem;
 }
 
+a {
+    transition: font-weight .15s ease-out;
+}
+
 .container__main {
     display: flex;
     flex-wrap: wrap;
@@ -48,32 +52,55 @@ h2 {
     flex: 1 0 100%;
 }
 
-#main__dev {
-}
-
 .dev__button {
     color: black;
     padding: 1rem 2rem;
     margin: 0 0.5rem 0 0;
 }
 
-#main__welcome {
+.main__container {
     height: 60rem;
+    display: flex;
     flex-direction: column;
 }
 
-#main__welcome > * {
-    flex: 0 0;
-    margin: 0 auto;
+.main__container > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#welcome__nickname {
+#welcome__form {
+    padding-top: 6rem;
+    font-size: 4rem;
+}
+
+#welcome__form p {
+    padding: 2rem 0;
+}
+
+#form__nickname {
+    font-size: 4rem;
+    text-align: center;
     color: black;
 }
 
-#main__menu {
+#menu__menu {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-top: 10rem;
+    font-size: 3rem;
+    font-weight: 500;
 }
 
-#main__game {
+#menu__menu li {
+    flex: 0 0 13%;
+}
+
+#menu__menu li:hover {
+    list-style: none;
+    font-size: 3.1rem;
 }
 

@@ -12,6 +12,12 @@
             gameData: {
                 nickname: '',
                 scoreTotal: 0
+            },
+            animationFrameIds: {
+                window: '',
+                welcome: '',
+                menu: '',
+                game: ''
             }
         }
 
@@ -23,6 +29,12 @@
             gameData: {
                 nickname: '',
                 scoreTotal: 0
+            },
+            animationFrameIds: {
+                window: '',
+                welcome: '',
+                menu: '',
+                game: ''
             }
         }
 
@@ -44,31 +56,45 @@
         // All elements that should be addressable
         const allElements = {
             welcome: {
-                nicknameText: document.getElementById('welcome__nickname'),
-                confirmButton: document.getElementById('welcome__confirm')
+                nicknameText: document.getElementById('form__nickname'),
+                confirmButton: document.getElementById('form__confirm')
             },
             menu: {
-
+                title: document.getElementById('menu__title'),
+                playButton: document.getElementById('menu__play'),
+                settingsButton: document.getElementById('menu__settings')
+                // instructionsButton: document.getElementById('menu__title')
             },
             game: {
-
+                title: document.getElementById('game__title'),
+                quizContainer: document.getElementById('game__quiz'),
+                question: document.getElementById('quiz__question'),
+                image: document.getElementById('quiz__image'),
+                answers: document.getElementById('quiz__answers'),
             }
         }
 
         // Set the active window
         function setActiveWindow(windowName) {
-            windows.welcomeWindow.style.display = 'none'
-            windows.menuWindow.style.display = 'none'
-            windows.gameWindow.style.display = 'none'
-            windows[windowName].style.display = 'flex'
-            state.activeWindow = windowName
+            if (windowName === 'welcomeWindow') {
+                allElements.welcome.nicknameText.value = ''
+            } else if (windowName === 'menuWindow') {
+                allElements.menu.title.innerHTML = `Hi ${state.gameData.nickname}!`
+            }
+
+            state.animationFrameIds.window = requestAnimationFrame(function() {
+                for (const [key, value] of Object.entries(windows)) {
+                    value.style.display = 'none'
+                }
+                windows[windowName].style.display = 'flex'
+                state.activeWindow = windowName
+            })
         }
 
         // Saves the current state to local storage
         function saveState() {
             localStorage.setItem('savedState', JSON.stringify(state))
             console.log('State saved')
-            console.log(state)
         }
 
         // Loads save data from local storage into state
@@ -80,10 +106,10 @@
         // Resets the local storage - Dev only
         function resetLocalStorage() {
             localStorage.removeItem('savedState')
-            setActiveWindow('welcomeWindow')
             state = defaultState
             saveState()
             console.log('State reset')
+            setActiveWindow('welcomeWindow')
         }
         
 
@@ -96,13 +122,17 @@
         devElements.devMenu.addEventListener('click', function() {setActiveWindow('menuWindow')})
         devElements.devGame.addEventListener('click', function() {setActiveWindow('gameWindow')})
 
+
         // WELCOME SECTION
         // Set nickname on welcome screen
         function saveNickname() {
-            state.gameData.nickname = allElements.welcome.nicknameText.value
-            state.firstLoad = false
-            saveState()
-            setActiveWindow('menuWindow')
+            var nicknameText = allElements.welcome.nicknameText.value
+            if (nicknameText !== '') {
+                state.gameData.nickname = nicknameText
+                state.firstLoad = false
+                saveState()
+                setActiveWindow('menuWindow')
+            }
         }
 
         // Save nickname on button click and on 'Enter'-keydown
@@ -124,53 +154,72 @@
 
 
         // MENU SECTION
-        
+        allElements.menu.playButton.addEventListener('click', function() {
+            console.log('play clicked')
+        })
+
+        allElements.menu.settingsButton.addEventListener('click', function() {
+            console.log('settings clicked')
+        })
 
 
         // GAME SECTION
         // All possible questions and their options
         // Addition functions with 2 random numbers and their sum - check later function
-        const quizItems = {
-            addition: {
-                questionText: "What is the sum of these numbers?"
+        const quiz = {
+            settings: {
+                questionsPerGame: 5,
+                rewardCorrect: 100,
+                streakBonus: 50
             },
-            colors: {
-                questionText: "what is the name of this color?",
-                options: {
-                    red: {
-                        hexValue: "#f23030"
-                    },
-                    blue: {
-                        hexValue: "#3050f2"
-                    },
-                    green: {
-                        hexValue: "#30f243"
-                    },
-                    yellow: {
-                        hexValue: "#f2f230"
-                    },
-                    purple: {
-                        hexValue: "#c530f2"
+            current: {
+                startTime: '',
+                correct: [],
+                questionNr: 0,
+                score: 0
+            },
+            categories: {
+                addition: {
+                    questionText: "What is the sum of these numbers?"
+                },
+                colors: {
+                    questionText: "what is the name of this color?",
+                    options: {
+                        red: {
+                            hexValue: "#f23030"
+                        },
+                        blue: {
+                            hexValue: "#3050f2"
+                        },
+                        green: {
+                            hexValue: "#30f243"
+                        },
+                        yellow: {
+                            hexValue: "#f2f230"
+                        },
+                        purple: {
+                            hexValue: "#c530f2"
+                        }
                     }
-                }
-            },
-            animals: {
-                questionText: "What's this animal called?",
-                options: {
-                    cat: {
-                        src: "../images/animals/cat.jpg"
-                    },
-                    cow: {
-                        src: "../images/animals/cow.jpg"
-                    },
-                    dog: {
-                        src: "../images/animals/dog.jpg"
-                    },
-                    hamster: {
-                        src: "../images/animals/hamster.jpg"
-                    },
-                    horse: {
-                        src: "../images/animals/horse.jpg"
+                },
+                animals: {
+                    questionText: "What's this animal called?",
+                    options: {
+                        cat: {
+                            src: "../images/animals/cat.jpg"
+                        },
+                        cow: {
+                            src: "../images/animals/cow.jpg"
+                        },
+                        dog: {
+                            src: "../images/animals/dog.jpg"
+                        },
+                        hamster: {
+                            src: "../images/animals/hamster.jpg"
+                        },
+                        horse: {
+                            src: "../images/animals/horse.jpg"
+                        }
                     }
                 }
             }
