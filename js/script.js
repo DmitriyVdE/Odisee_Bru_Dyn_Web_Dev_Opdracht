@@ -408,6 +408,7 @@
             allElements.game.questionImage.src = quiz.current.question.src
         }
 
+        // Bind speech API to 'voice' button
         allElements.game.answerVoice.addEventListener('click', function() {
             let recognition = new (webkitSpeechRecognition || SpeechRecognition)();
             recognition.lang = 'en-US';
