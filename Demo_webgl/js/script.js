@@ -28,6 +28,7 @@ scene.add( ground );
 
 // add shape
 var shapeGeometry = new THREE.TorusGeometry(30, 10, 12, 24);
+// var shapeGeometry = new THREE.BoxGeometry( 50, 50, 50 );
 var shapeMaterial = new THREE.MeshPhongMaterial({
     color: 0x156289,
     side: THREE.DoubleSide,
@@ -59,6 +60,7 @@ scene.add(spotlight);
 camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
 camera.position.y = 250;
 camera.position.z = 250;
+// camera.position.x = 100;
 camera.lookAt(new THREE.Vector3(0, 50, 0));
 
 // init renderer
@@ -73,7 +75,7 @@ document.body.appendChild(renderer.domElement);
 var render = function() {
     // keep looping
     requestAnimationFrame(render);
-    shape.rotation.y += 0.03;
+    shape.rotation.y += 0.01;
 
     // render the scene
     renderer.render(scene, camera);       

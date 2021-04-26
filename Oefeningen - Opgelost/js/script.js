@@ -5,11 +5,13 @@
         console.log('Ready')
 
         // LOCAL STORAGE SECTION
+        // Default state if no saved state is found
         let defaultGameData = {
             username: 'No name found',
             score: 'No score found'
         }
 
+        // Current active state
         let gameData = {
             username: 'No name found',
             score: 'No score found'
@@ -26,16 +28,18 @@
         loadGameData()
         saveGameData()
 
-        // 1. Vul deze functie aan zodat de 'gameData'-variabele wordt opgevuld met de opgeslagen data in local storage.
-        // 2. Indien er geen data kan worden gevonden vul je de 'gameData'-variabele op met de data uit de 'defaultGameData'-variabele.
-        // 3. Geef ook de corresponderende data weer op de webpagina. De te gebruiken HTML-elementen kan je terugvinden in de 'localStorageElements'-variabele hierboven.
+        // Loads save data from local storage into state
+        // If no data is found default state is used
         function loadGameData() {
-            
+            gameData = localStorage.getItem('gameData') ? JSON.parse(localStorage.getItem('gameData')) : defaultGameData
+            localStorageElements.username.innerHTML = gameData.username
+            localStorageElements.score.innerHTML = gameData.score
         }
 
-        // 4. Sla de gegevens in de 'gameData'-variabele op in local storage.
+        // Saves the current state to local storage
         function saveGameData() {
-            
+            localStorage.setItem('gameData', JSON.stringify(gameData))
+            console.log('Data saved')
         }
 
         function setUsername() {
@@ -59,12 +63,9 @@
             }
         })
 
-        // 5. Verwijder de data in de local storage.
+        // Resets the local storage - Dev only
         function resetGameData() {
-            
-            // Plaats je code hier.
-
-
+            localStorage.removeItem('gameData')
             gameData = defaultGameData
             saveGameData()
             console.log('Game data reset')
@@ -88,6 +89,7 @@
                 stop: document.getElementById('requestanimationframe__stop'),
                 timer: document.getElementById('requestanimationframe__timer'),
                 bar: document.getElementById('requestanimationframe__bar'),
+                sprite: document.getElementById('requestanimationframe_sprite')
             },
             sprite: {
                 lastTime: 0,
@@ -100,10 +102,7 @@
         timer.elements.start.addEventListener('click', startCountdown)
         timer.elements.stop.addEventListener('click', stopCountdown)
 
-        // 6. Zet de variabelen in timer.countdown naar de correcte waarden.
-        // 7. Geef de resterende tijd weer op de webpagina.
-        // 8. Stel de breedte van de timer bar naar 100%.
-        // 9. Start de 'updateCountdown'-functie met requestAnimationFrame en sla de animationFrameId op in timer.animationFrameId.
+        // Sets up and starts countdown
         function startCountdown() {
             timer.countdown.startTime = Date.now()
             timer.countdown.lastTime = timer.countdown.startTime
@@ -115,23 +114,38 @@
             timer.animationFrameId = requestAnimationFrame(updateCountdown)
         }
 
-        // 10. Indien de timer nog loopt update je iedere seconde de resterende tijd op de webpagina.
-        // 11. Iedere frame update je wel de breedte van de timer bar.
-        //     TIP: Bereken hoeveel procent van de timer nog resteerd en stel het correcte percentage voor de breedte in.
-        // 12. Roep opnieuw de 'updateCountdown'-functie op indien er nog tijd resteerd in de timer.
-        //     Vergeet ook hier niet de animationFrameId op te slaan.
-        // 13. Indien er geen resterende tijd meer is in de timer, zet je de breedte van de timer bar naar 0%.
-        // 14. Voeg nu ook code toe die om de 100 milliseconden de sprite animeert.
-        //     TIP: Maak hier gebruik van backgroundPosition en schuif op met de width die hierboven staat gedefinieerd in timer.sprite.width.
-        //     Ieder deel van de sprite is 256px bij 256px.
+        // Update the countdown
         function updateCountdown() {
-            const timestamp = Date.now()
-            
+            if (timer.countdown.timeLeft > 0) {
+                const timestamp = Date.now()
+                if (timestamp - timer.countdown.lastTime >= 1000) {
+                    timer.countdown.lastTime = timestamp
+                    timer.countdown.timeLeft--
+                    timer.elements.timer.innerHTML = timer.countdown.timeLeft
+                }
+
+                if (timestamp - timer.sprite.lastTime >= 100) {
+                    timer.sprite.lastTime = timestamp
+                    timer.elements.sprite.style.backgroundPosition = timer.sprite.currentStep * timer.sprite.width + 'px';
+
+                    timer.sprite.currentStep--;
+                    if (timer.sprite.currentStep == 0) {
+                        timer.sprite.currentStep = timer.sprite.totalSteps
+                    }
+                }
+
+
+                let timeLeftPercentage = 100 - (((timestamp - timer.countdown.startTime) / (timer.countdown.duration * 1000)) * 100)
+                timer.elements.bar.style.width = timeLeftPercentage + '%'
+
+                timer.animationFrameId = requestAnimationFrame(updateCountdown)
+            } else {
+                timer.elements.bar.style.width = '0%'
+            }
         }
 
-        // 15. Stop de timer met cancelAnimationFrame.
         function stopCountdown() {
-            
+            cancelAnimationFrame(timer.animationFrameId)
         }
     })
 })()
