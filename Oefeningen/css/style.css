@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Source Sans 3 VF';
+    font-weight: 200 900;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2");
+}
+
+.enlarge_text {
+    transition: font-weight .15s ease;
+}
+
+.enlarge_text:hover {
+    font-weight: 700;
+}
+
+* {
+    color: white;
+    font-family: 'Source Sans 3 VF';
+}
+
+html {
+    width: 100%;
+    background-color: #292C34;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+.button {
+    font-size: 3rem;
+    border: 1px solid white;
+    padding: 1rem;
+    margin: 0.4rem;
+    transition: all 1s ease;
+}
+
+.button:hover {
+    transform: rotate(10deg);
+    font-weight: 700;
+    background-color: darkolivegreen;
+}
+
+.text_input {
+    color: black;
+    padding: 1rem;
+    margin: 0.4rem;
+}
+
+.display_text {
+    font-size: 3rem;
+    border: 1px solid white;
+    padding: 1rem;
+    margin: 0.4rem;
+}
+
+.container__main {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 93rem;
+    margin: 0 auto;
+    color: white;
+    border: 1px solid white;
+}
+
+.main_subcontainer {
+    padding: 1rem;
+    border: 1px solid white;
+    flex: 1 0 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#main__requestanimationframe {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#requestanimationframe__bar_container {
+    flex: 1 1 100%;
+    margin: 0.4rem;
+}
+
+.timer {
+    font-size: 3rem;
+    border: 1px solid white;
+    padding: 1rem;
+    margin: 0.4rem;
+}
+
+#requestanimationframe__bar {
+    width: 100%;
+    height: 2rem;
+    background-color: white;
+}

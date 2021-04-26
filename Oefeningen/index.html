@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Quiz with Google speech API integration </title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="js/script.js"></script>
+</head>
+<body>
+    <div class="container__main">
+		
+		<div id="main__localstorage" class="main_subcontainer">
+			<input type="text" id="localstorage__textinput" class="text_input">
+			<div id="localstorage__save" class="button enlarge_text"><a href="#">Save</a></div>
+			<div id="localstorage__reset" class="button enlarge_text"><a href="#">Reset</a></div>
+			<p id="localstorage__username" class="display_text">No name found</p>
+			<p id="localstorage__score" class="display_text">No score found</p>
+		</div>
+		
+		<div id="main__requestanimationframe" class="main_subcontainer">
+			<div id="requestanimationframe__start" class="button enlarge_text"><a href="#">Start timer</a></div>
+			<div id="requestanimationframe__stop" class="button enlarge_text"><a href="#">Stop timer</a></div>
+			<p id="requestanimationframe__timer" class="timer">10</p>
+			<div id="requestanimationframe__bar_container">
+				<div id="requestanimationframe__bar"></div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
