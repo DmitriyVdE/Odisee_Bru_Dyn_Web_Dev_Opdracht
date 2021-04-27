@@ -1,20 +1,27 @@
 /* Importeer hieronder de 'Source Sans 3 VF'-font */
-@font-face {
-    font-family: 'Source Sans 3 VF';
-    font-weight: 200 900;
-    font-style: normal;
-    font-stretch: normal;
-    src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2");
-}
+
 
 /* Zorg ervoor dat elementen met deze klasse een dikker lettertype weergeven bij een hover. */
-/* Voorzie ook een geleidelijke overgang tussen de normale stijl en de hover. */
+/* Voorzie ook een overgang tussen de normale stijl en de hover. */
 .enlarge_text {
-    transition: font-weight .15s ease;
+    
 }
 
 .enlarge_text:hover {
-    font-weight: 700;
+    
+}
+
+/* Zorg voor een translation naar keuze bij een hover over elementen met deze klasse. */
+/* Voorzie ook hier een overgang tussen de normale stijl en de hover. */
+.button {
+    font-size: 3rem;
+    border: 1px solid white;
+    padding: 1rem;
+    margin: 0.4rem;
+}
+
+.button:hover {
+
 }
 
 /* Verander hieronder niets */
@@ -35,20 +42,6 @@ body {
 
 h2 {
     font-size: 5rem;
-}
-
-.button {
-    font-size: 3rem;
-    border: 1px solid white;
-    padding: 1rem;
-    margin: 0.4rem;
-    transition: all 1s ease;
-}
-
-.button:hover {
-    transform: rotate(10deg);
-    font-weight: 700;
-    background-color: darkolivegreen;
 }
 
 .text_input {
