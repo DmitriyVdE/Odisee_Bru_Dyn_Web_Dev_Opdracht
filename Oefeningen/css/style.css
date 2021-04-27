@@ -1,3 +1,4 @@
+/* Importeer hieronder de 'Source Sans 3 VF'-font */
 @font-face {
     font-family: 'Source Sans 3 VF';
     font-weight: 200 900;
@@ -6,6 +7,8 @@
     src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2");
 }
 
+/* Zorg ervoor dat elementen met deze klasse een dikker lettertype weergeven bij een hover. */
+/* Voorzie ook een geleidelijke overgang tussen de normale stijl en de hover. */
 .enlarge_text {
     transition: font-weight .15s ease;
 }
@@ -14,6 +17,7 @@
     font-weight: 700;
 }
 
+/* Verander hieronder niets */
 * {
     color: white;
     font-family: 'Source Sans 3 VF';
