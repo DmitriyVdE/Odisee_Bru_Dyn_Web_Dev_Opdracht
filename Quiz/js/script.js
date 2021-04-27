@@ -39,6 +39,8 @@
             }
         }
 
+        const element = document.getElementById('dev__welcome')
+
         // All developer elements and their selectors
         const devElements = {
             devWelcome: document.getElementById('dev__welcome'),
@@ -415,11 +417,11 @@
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
             recognition.start();
-            recognition.onresult = function(event) {
+            recognition.addEventListener('result', function(event) {
                 console.log(event.results[0][0].transcript)
                 allElements.game.answerText.value = event.results[0][0].transcript;
                 submitAnswer()
-            };
+            });
           });
 
         // Call submit answer with 'Enter'
