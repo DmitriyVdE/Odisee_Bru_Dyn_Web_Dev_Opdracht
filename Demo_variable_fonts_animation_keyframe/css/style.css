@@ -1,6 +1,15 @@
 /*
     Code based on https://typogram.github.io/Anicons/use.html
 */
+@font-face {
+  font-family: "Decovar";
+  src: url("../fonts/Decovar/DecovarAlpha-VF.woff2");
+}
+
+@font-face {
+  font-family: "Lab DJR";
+  src: url("../fonts/Lab-DJR_2.0.woff2");
+}
 
 @font-face {
   font-family: "Anicons Regular";
@@ -8,6 +17,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Anicons Color";
   src: url("../fonts/Anicons/Anicons_variable/AniconsColorGX.ttf");
@@ -38,6 +48,33 @@ body {
   border: 1px solid white;
 }
 
+.font-showcase {
+    font-size: 10rem;
+    margin: 1rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.decovar {
+  font-family: "Decovar";
+}
+
+/* Supports values from 0 to 1000 */
+.decovar_fvs {
+  font-variation-settings: "BLDA" 0, "BLDB" 0, "WMX2" 0, "SKLA" 0, "SKLB" 0,
+    "SKLD" 0, "TRMA" 0, "TRMB" 0, "TRMC" 0, "TRMD" 0, "TRME" 0, "TRMF" 0,
+    "TRMG" 0, "TRMK" 0, "TRML" 0;
+}
+
+.labdjr {
+    font-family: "Lab DJR";
+}
+
+.labdjr_fvs {
+    font-variation-settings: "size" 400, "quad" 1000, "bevl" 0, "oval" 1000;
+}
+
 .box {
   font-size: 4rem;
   width: 7rem;
@@ -58,7 +95,7 @@ body {
 }
 
 .aniconn {
-  animation: anicon-animation .6s ease-in-out infinite;
+  animation: anicon-animation 1s ease-in-out infinite;
 }
 
 @keyframes anicon-animation {

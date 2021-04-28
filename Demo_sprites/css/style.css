@@ -1,0 +1,125 @@
+* {
+    color: white;
+    font-family: 'Source Sans 3 VF';
+    font-size: 3rem;
+}
+
+html {
+    width: 100%;
+    background-color: #292C34;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+}
+
+.container__main {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 93rem;
+    margin: 0 auto;
+    color: white;
+    border: 1px solid white;
+}
+
+.main_subcontainer {
+    border: 1px solid white;
+    flex: 1 0 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    float: left;
+    padding: 1rem;
+}
+
+#requestanimationframe_sprite {
+    background: url('../img/sprite.png');
+    width: 256px;
+    height: 256px;
+}
+
+.requestanimationframe_sprite_help {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 154px;
+}
+
+.requestanimationframe_sprite_full {
+    flex: 1 0 100%;
+    background: url('../img/sprite.png');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 100%;
+    height: 154px;
+}
+
+.requestanimationframe_sprite_overlay {
+    position: absolute;
+    width: 154px;
+    height: 152px;
+    border: 2px solid red;
+    animation: sprite_overlay_animation 6s step-end infinite;
+    animation-delay: 1s;
+}
+
+@keyframes sprite_overlay_animation {
+    0% {
+        left: 0px;
+    }
+    16.67% {
+        left: 154px;
+    }
+    33.34% {
+        left: 308px;
+    }
+    50% {
+        left: 462px;
+    }
+    66.67% {
+        left: 616px;
+    }
+    83.33% {
+        left: 772px;
+    }
+}
+
+.requestanimationframe_sprite_help2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 154px;
+}
+
+.requestanimationframe_sprite_full2 {
+    flex: 1 0 100%;
+    background: url('../img/sprite.png');
+    background-size: 100% auto;
+    width: 100%;
+    height: 154px;
+    animation: sprite_overlay_animation2 6s linear infinite;
+    animation-delay: 1s;
+}
+
+.requestanimationframe_sprite_overlay2 {
+    position: absolute;
+    width: 154px;
+    height: 152px;
+    border: 2px solid red;
+}
+
+@keyframes sprite_overlay_animation2 {
+    0% {
+        background-position: 0px;
+    }
+    100% {
+        background-position: 926px;
+    }
+}
