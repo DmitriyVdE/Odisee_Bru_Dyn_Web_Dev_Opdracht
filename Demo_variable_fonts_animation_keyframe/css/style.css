@@ -1,0 +1,77 @@
+/*
+    Code based on https://typogram.github.io/Anicons/use.html
+*/
+
+@font-face {
+  font-family: "Anicons Regular";
+  src: url("../fonts/Anicons/Anicons_variable/AniconsGX.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Anicons Color";
+  src: url("../fonts/Anicons/Anicons_variable/AniconsColorGX.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  color: white;
+}
+
+html {
+  width: 100%;
+  background-color: #292c34;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+}
+
+.container__main {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 93rem;
+  margin: 0 auto;
+  color: white;
+  border: 1px solid white;
+}
+
+.box {
+  font-size: 4rem;
+  width: 7rem;
+  height: 7rem;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.anicon {
+  font-family: "Anicons Regular", sans-serif;
+  font-variation-settings: "TIME" 1;
+  transition: font-variation-settings 1s ease;
+}
+
+.anicon:hover {
+  font-variation-settings: "TIME" 100;
+}
+
+.aniconn {
+  animation: anicon-animation .6s ease-in-out infinite;
+}
+
+@keyframes anicon-animation {
+  0% {
+    font-variation-settings: "TIME" 1;
+    /* margin-left: 0rem; */
+  }
+  /* 50% {
+    font-variation-settings: "TIME" 10;
+    margin-left: 1rem;
+  } */
+  100% {
+    font-variation-settings: "TIME" 100;
+    /* margin-left: 10rem; */
+  }
+}
