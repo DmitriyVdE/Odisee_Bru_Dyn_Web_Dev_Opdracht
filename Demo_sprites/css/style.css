@@ -1,12 +1,12 @@
 * {
     color: white;
-    font-family: 'Source Sans 3 VF';
+    font-family: "Source Sans 3 VF";
     font-size: 3rem;
 }
 
 html {
     width: 100%;
-    background-color: #292C34;
+    background-color: #292c34;
 }
 
 body {
@@ -39,8 +39,14 @@ ul li {
     padding: 1rem;
 }
 
+#requestanimationframe_sprite2 {
+    background: url("../img/sprite.png");
+    width: 256px;
+    height: 256px;
+}
+
 #requestanimationframe_sprite {
-    background: url('../img/sprite.png');
+    background: url("../img/sprite.png");
     width: 256px;
     height: 256px;
 }
@@ -54,7 +60,7 @@ ul li {
 
 .requestanimationframe_sprite_full {
     flex: 1 0 100%;
-    background: url('../img/sprite.png');
+    background: url("../img/sprite.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     width: 100%;
@@ -100,7 +106,7 @@ ul li {
 
 .requestanimationframe_sprite_full2 {
     flex: 1 0 100%;
-    background: url('../img/sprite.png');
+    background: url("../img/sprite.png");
     background-size: 100% auto;
     width: 100%;
     height: 154px;

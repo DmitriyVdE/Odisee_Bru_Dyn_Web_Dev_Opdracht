@@ -1,13 +1,13 @@
 @font-face {
-    font-family: 'Source Sans 3 VF';
+    font-family: "Source Sans 3 VF";
     font-weight: 200 900;
     font-style: normal;
     font-stretch: normal;
-    src: url('../fonts/SourceSans3VF-Roman.otf.woff2') format("woff2");
+    src: url("../fonts/SourceSans3VF-Roman.otf.woff2") format("woff2");
 }
 
 .enlarge_text {
-    transition: font-weight .15s ease;
+    transition: font-weight 0.15s ease;
 }
 
 .enlarge_text:hover {
@@ -16,12 +16,12 @@
 
 * {
     color: white;
-    font-family: 'Source Sans 3 VF';
+    font-family: "Source Sans 3 VF";
 }
 
 html {
     width: 100%;
-    background-color: #292C34;
+    background-color: #292c34;
 }
 
 body {
@@ -102,7 +102,7 @@ h2 {
 }
 
 #requestanimationframe_sprite {
-    background: url('../img/sprite.png');
+    background: url("../img/sprite.png");
     margin: 0.4rem;
     width: 256px;
     height: 256px;
