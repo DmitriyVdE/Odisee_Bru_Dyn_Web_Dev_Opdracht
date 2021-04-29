@@ -11,8 +11,6 @@
       loadA: document.getElementById("load__a"),
       saveB: document.getElementById("save__b"),
       loadB: document.getElementById("load__b"),
-      saveC: document.getElementById("save__c"),
-      loadC: document.getElementById("load__c"),
       clearAll: document.getElementById("clear__all"),
     };
 
@@ -28,13 +26,10 @@
       return `Nothing found in ${key}`;
     }
 
-    function checkInput() {
-      const inputText = el.input.value;
-      if (inputText != "") {
-        return true;
-      }
-      return false;
-    }
+    el.clearAll.addEventListener("click", function () {
+      localStorage.removeItem("savedA");
+      localStorage.removeItem("savedB");
+    });
 
     el.saveA.addEventListener("click", function () {
       const inputText = el.input.value;
@@ -58,21 +53,12 @@
       el.title.innerHTML = loadFromLocalStorage("savedB");
     });
 
-    el.saveC.addEventListener("click", function () {
+    function checkInput() {
       const inputText = el.input.value;
-      if (checkInput()) {
-        saveToLocalStorage("savedC", inputText);
+      if (inputText != "") {
+        return true;
       }
-    });
-
-    el.loadC.addEventListener("click", function () {
-      el.title.innerHTML = loadFromLocalStorage("savedC");
-    });
-
-    el.clearAll.addEventListener("click", function () {
-      localStorage.removeItem("savedA");
-      localStorage.removeItem("savedB");
-      localStorage.removeItem("savedC");
-    });
+      return false;
+    }
   });
 })();

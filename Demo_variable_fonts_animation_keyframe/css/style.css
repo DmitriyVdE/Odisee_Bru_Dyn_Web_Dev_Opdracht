@@ -92,6 +92,7 @@ body {
 
 .anicon:hover {
   font-variation-settings: "TIME" 100;
+  margin-left: 1rem;
 }
 
 .aniconn {

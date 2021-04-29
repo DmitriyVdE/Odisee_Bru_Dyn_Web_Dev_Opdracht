@@ -36,6 +36,7 @@
                 animation.sprite.currentStep--;
                 if (animation.sprite.currentStep == 0) {
                     animation.sprite.currentStep = animation.sprite.totalSteps;
+                    animation.elements.sprite.style.backgroundPosition = '0px';
                 }
             }
             requestAnimationFrame(updateAnimation);

@@ -29,8 +29,8 @@ ground.receiveShadow = true;
 scene.add(ground);
 
 // add shape
-let shapeGeometry = new THREE.TorusGeometry(30, 10, 12, 24);
-// let shapeGeometry = new THREE.BoxGeometry( 50, 50, 50 );
+// let shapeGeometry = new THREE.TorusGeometry(30, 10, 12, 24);
+let shapeGeometry = new THREE.BoxGeometry( 50, 50, 50 );
 let shapeMaterial = new THREE.MeshPhongMaterial({
     color: 0x156289,
     side: THREE.DoubleSide,
@@ -39,7 +39,7 @@ let shapeMaterial = new THREE.MeshPhongMaterial({
     specular: 0x156289,
 });
 let shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-shape.castShadow = false;
+shape.castShadow = true;
 shape.receiveShadow = false;
 shape.position.y = 70;
 shape.rotation.y = (Math.PI / 360) * 120;
@@ -50,7 +50,7 @@ let ambientlight = new THREE.AmbientLight(0x444444, 2.5);
 scene.add(ambientlight);
 
 // add spotlight
-let spotlight = new THREE.SpotLight(0xf88fff, 0.7);
+let spotlight = new THREE.SpotLight(0xffffff, 0.7);
 spotlight.position.set(150, 200, -75);
 spotlight.shadow.camera.visible = true;
 spotlight.castShadow = true;
